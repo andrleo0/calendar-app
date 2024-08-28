@@ -38,3 +38,35 @@
   outline: none;
   padding: 10px;
 }
+
+/* FAB */
+/* .fab {
+  background-color: #007bff;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  height: 50px;
+  position: fixed;
+  right: 20px;
+  text-align: center;
+  width: 50px;
+  z-index: 999;
+} */
+.fab {
+  border-radius: 100%;
+  bottom: 25px;
+  font-size:  30px;
+  padding: 25px;
+  position: fixed;
+  right: 25px;
+}
+
+.fab-danger {
+  border-radius: 100%;
+  bottom: 25px;
+  font-size:  30px;
+  position: fixed;
+  left: 25px;
+  width: 70px;
+  height: 70px;
+}
