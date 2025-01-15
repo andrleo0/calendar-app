@@ -20,7 +20,7 @@ export const useAuthStore = () => {
             localStorage.setItem('token-init-date', new Date().getTime());
             dispatch( onLogin({ name:data.name , uid:data.uid }) );
 
-        }catch(error){
+        }catch( error ){
             dispatch( onLogout('Credenciales incorrectas') );
             setTimeout(() => {
                 dispatch( clearErrorMessage() );
@@ -39,13 +39,38 @@ export const useAuthStore = () => {
             localStorage.setItem('token-init-date', new Date().getTime());
             dispatch( onLogin({ name:data.name , uid:data.uid }) );
 
-        }catch(error){
+        }catch( error ){
+
             dispatch( onLogout( error.response.data?.msg || '--' ) );
             setTimeout(() => {
                 dispatch( clearErrorMessage() );
             }, 10);
+
         }
     } 
+
+    const checkAuthToken = async () => {
+        const token = localStorage.getItem('token');
+        if( !token ) dispatch( onLogout() );
+        try{
+            const { data } = await calendarApi.get('/auth/renew');
+            console.log(data);
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('token-init', new Date().getTime());
+            dispatch( onLogin({ name:data.name , uid:data.uid }) );
+
+        }catch(error){
+
+            localStorage.clear();
+            dispatch( onLogout() );
+        }
+    
+    }
+
+    const startLogout = () => {
+        localStorage.clear();
+        dispatch( onLogout() );
+    }
 
     return {
 
@@ -57,6 +82,8 @@ export const useAuthStore = () => {
         //* Metodos
         startLogin,
         startRegister,
+        checkAuthToken,
+        startLogout
 
     };
 };
